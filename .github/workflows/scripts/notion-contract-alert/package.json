@@ -1,0 +1,7 @@
+{
+  "name": "notion-contract-alert",
+  "version": "1.0.0",
+  "dependencies": {
+    "@notionhq/client": "^2.3.0"
+  }
+}
