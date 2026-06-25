@@ -1,0 +1,29 @@
+name: Notion 契約書アラート自動更新
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-alerts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install @notionhq/client
+        working-directory: scripts/notion-contract-alert
+
+      - name: Run alert update script
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_CONTRACT_DATABASE_ID }}
+        run: node index.js
+        working-directory: scripts/notion-contract-alert
